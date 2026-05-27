@@ -141,7 +141,7 @@ Logs every request as a structured JSON event including prompt, response, latenc
 
 ## Notes
 
-- `.env` is listed in `.gitignore` — never commit API keys to git
+- `.env` is listed in `.gitignore` 
 - Groq is the recommended provider — free, fast, and no daily quota issues
 - Gemini free tier exhausts quickly — switch to Groq if you hit a 429 error
 - Ollama requires the app installed locally and `ollama serve` running in a separate terminal
