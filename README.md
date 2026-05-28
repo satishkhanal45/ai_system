@@ -26,8 +26,7 @@ ai_system/
 │   ├── schemas.py               # Pydantic request/response schemas
 │   ├── tracer.py                # Request tracing (latency, tokens)
 │   └── validators.py            # LLM output validation and JSON recovery
-├── config_switcher.py           # Runtime provider switching
-├── menu.py                      # Interactive terminal task runner
+├── config_switcher.py           # Runtime provider switching                
 ├── main.py                      # Direct task runner
 ├── .env                         # API keys and config (not committed)
 ├── .gitignore                   # Ignores .env and .venv
@@ -74,7 +73,7 @@ Get your keys from:
 
 ### Interactive menu
 ```bash
-uv run menu.py
+uv run main.py
 ```
 
 ```
