@@ -1,6 +1,6 @@
 # AI System — Week 1
 
-End-to-end AI system built with Python covering async API clients, streaming, structured outputs, and observability.
+End-to-end AI system built with Python covering async API clients, streaming, structured outputs, observability, and a chat interface with memory.
 
 ---
 
@@ -17,17 +17,19 @@ ai_system/
 │   ├── __init__.py              # Services module boundary
 │   ├── llm_service.py           # Unified LLM call service
 │   ├── stream_service.py        # Streaming pipeline service
-│   ├── structured_service.py    # Structured output service
-│   └── debug_service.py         # Request tracing and failure simulation
+│   ├── structured_service.py    # Structured output + validation service
+│   ├── debug_service.py         # Request tracing and failure simulation
+│   └── chat_service.py          # Chat with memory service
 ├── utils/
 │   ├── __init__.py              # Utils module boundary
 │   ├── config.py                # Environment variable loader
 │   ├── logger.py                # Structured logging system
 │   ├── schemas.py               # Pydantic request/response schemas
 │   ├── tracer.py                # Request tracing (latency, tokens)
-│   └── validators.py            # LLM output validation and JSON recovery
-├── config_switcher.py           # Runtime provider switching                
-├── main.py                      # Direct task runner
+│   ├── validators.py            # LLM output validation and JSON recovery
+│   └── cli.py                   # CLI colors and formatting helpers
+├── config_switcher.py           # Runtime provider switching
+├── main.py                      # Interactive terminal task runner (entry point)
 ├── .env                         # API keys and config (not committed)
 ├── .gitignore                   # Ignores .env and .venv
 └── pyproject.toml               # Project dependencies (uv)
@@ -50,7 +52,7 @@ cd ai_system
 
 **3. Install dependencies**
 ```bash
-uv add httpx python-dotenv pydantic
+uv add httpx python-dotenv pydantic colorama
 ```
 
 **4. Create `.env` file**
@@ -71,7 +73,6 @@ Get your keys from:
 
 ## Running
 
-### Interactive menu
 ```bash
 uv run main.py
 ```
@@ -85,35 +86,46 @@ uv run main.py
 ║  3. Streaming + Async Execution System       ║
 ║  4. Structured Data + Validation Layer       ║
 ║  5. Observability + Debugging System         ║
+║  6. Chat with Memory                         ║
 ║  0. Exit                                     ║
 ╚══════════════════════════════════════════════╝
 ```
 
 Enter a number to run the task. Press Enter after each task to return to the menu.
 
-### Direct run
-```bash
-uv run main.py
-```
-
 ---
 
 ## Tasks
 
 **T1 — System Architecture + Project Scaffold**
-Sets up the project folder structure, `.env` config loading, structured logging, and module boundaries (`api/`, `services/`, `utils/`). This is the foundation every other task is built on.
+Sets up the project folder structure, `.env` config loading, structured logging, and module boundaries. This is the foundation every other task is built on. No API call is made — this task is about the project organization itself.
 
 **T2 — Multi-Provider Async API Layer**
-Async HTTP client using `httpx` supporting Groq, Gemini, and Ollama. All providers share a unified request/response schema via Pydantic. Retries up to 3 times on failure, respects a 30 second timeout per attempt.
+Async HTTP client using `httpx` supporting Groq, Gemini, and Ollama. All providers share a unified request/response schema via Pydantic. Automatically retries up to 3 times on failure and respects a 30 second timeout per attempt.
 
 **T3 — Streaming + Async Execution System**
 Streams LLM responses token by token in real time instead of waiting for the full response. Measures time-to-first-token and total latency on every stream. Handles partial failures mid-stream with retry logic.
 
 **T4 — Structured Data + Validation Layer**
-Forces the LLM to return a strict JSON format with `summary`, `keywords`, and `sentiment` fields. Recovers from common malformed JSON patterns: markdown code fences, single quotes, trailing commas, and extra text around the JSON. Validates all fields strictly using Pydantic.
+Forces the LLM to return a strict JSON format containing `summary`, `keywords`, and `sentiment` fields. Recovers from common malformed JSON patterns including markdown code fences, single quotes, trailing commas, and extra text around the JSON. Validates all fields strictly using Pydantic.
 
 **T5 — Observability + Debugging System**
-Logs every request as a structured JSON event including prompt, response, latency, and token counts. Simulates API failures with an invalid model name to verify retry and error handling. Switches providers at runtime without restarting. Demonstrates async speedup by running concurrent requests vs sequential.
+Logs every request as a structured JSON event including prompt, response, latency, and token counts. Simulates API failures with an invalid model name to verify retry and error handling. Switches providers at runtime without restarting. Demonstrates async speedup by running concurrent requests versus sequential.
+
+**T6 — Chat with Memory**
+Conversational chat interface that remembers the full conversation history across turns. Sends the complete message history to the LLM on every request so it maintains context. Replies are kept to 5 lines or less via a system prompt. Supports `history` to view conversation, `reset` to clear memory, and `exit` to return to the menu.
+
+---
+
+## CLI Colors
+
+| Color | Meaning |
+|---|---|
+| Cyan | Menu, labels, info messages |
+| Green | Success messages, user input |
+| Yellow | Assistant responses, streamed tokens |
+| Magenta | Section headers, stream markers |
+| Red | Errors and failures |
 
 ---
 
@@ -124,6 +136,7 @@ Logs every request as a structured JSON event including prompt, response, latenc
 | `httpx` | Async HTTP client for LLM API calls |
 | `pydantic` | Schema validation and structured outputs |
 | `python-dotenv` | Loads `.env` into environment variables |
+| `colorama` | Terminal colors and formatting |
 
 ---
 
@@ -138,11 +151,24 @@ Logs every request as a structured JSON event including prompt, response, latenc
 
 ---
 
+## Chat Commands
+
+When running task 6 (Chat with Memory):
+
+| Command | Action |
+|---|---|
+| `history` | Shows the full conversation so far |
+| `reset` | Clears conversation memory |
+| `exit` | Returns to the main menu |
+
+---
+
 ## Notes
 
-- `.env` is listed in `.gitignore` 
+- `.env` is listed in `.gitignore` — never commit API keys to git
 - Groq is the recommended provider — free, fast, and no daily quota issues
 - Gemini free tier exhausts quickly — switch to Groq if you hit a 429 error
 - Ollama requires the app installed locally and `ollama serve` running in a separate terminal
 - All provider configs live in `api/providers.py` — adding a new provider is one block
 - Runtime provider switching is handled by `config_switcher.py` without restarting the app
+- Chat memory works by sending the full conversation history to the LLM on every request
