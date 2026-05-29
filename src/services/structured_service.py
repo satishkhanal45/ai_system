@@ -1,10 +1,10 @@
 #calls LLM and enforces structured output
 
 
-from utils.schemas import LLMRequest, LLMResponse
-from utils.validators import validate_llm_output
-from services.llm_service import call_llm
-from utils.logger import get_logger
+from ..utils.schemas import LLMRequest, LLMResponse
+from ..utils.validators import validate_llm_output
+from .llm_service import call_llm
+from ..utils.logger import get_logger, log_request, log_error
 
 logger = get_logger("structured_service")
 
@@ -34,13 +34,21 @@ async def get_structured_output(provider: str, model: str, user_text: str):
     )
 
     logger.info(f"Sending structured output request to {provider}")
+    log_request(logger, provider, model, user_text, request_type="structured")
+    
     response: LLMResponse = await call_llm(request)
 
     if response.status == "error":
         logger.error("LLM call failed, cannot validate output")
+        log_error(logger, "structured_output_error", provider, "LLM call failed")
         return None
 
     logger.info("Validating LLM output against schema")
-    result = validate_llm_output(response.content)
-
-    return result
+    try:
+        result = validate_llm_output(response.content)
+        logger.info(f"Structured output validation successful")
+        return result
+    except Exception as e:
+        logger.error(f"Validation error: {type(e).__name__}: {e}")
+        log_error(logger, "validation_error", provider, str(e))
+        return None

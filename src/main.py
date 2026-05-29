@@ -1,19 +1,19 @@
 import asyncio
 import time
 from colorama import Fore, Style
-from utils.config import APP_NAME
-from utils.logger import get_logger
-from utils.schemas import LLMRequest
-from utils.cli import (
+from .utils.config import APP_NAME
+from .utils.logger import get_logger
+from .utils.schemas import LLMRequest
+from .utils.cli import (
     print_menu, print_user, print_assistant, print_success,
     print_error, print_info, print_section, print_response, input_prompt
 )
-from services.llm_service import call_llm
-from services.stream_service import stream_llm
-from services.structured_service import get_structured_output
-from services.debug_service import run_with_trace, simulate_failure
-from services.chat_service import chat, reset_history, get_history
-from config_switcher import switch_provider, get_current_config
+from .services.llm_service import call_llm
+from .services.stream_service import stream_llm
+from .services.structured_service import get_structured_output
+from .services.debug_service import run_with_trace, simulate_failure
+from .services.chat_service import chat, reset_history, get_history
+from .config_switcher import switch_provider, get_current_config
 
 logger = get_logger(APP_NAME)
 

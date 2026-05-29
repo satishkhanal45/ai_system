@@ -3,7 +3,7 @@
 import httpx
 import time
 import json
-from utils.logger import get_logger
+from ..utils.logger import get_logger, log_request, log_error
 
 logger = get_logger("streaming")
 
@@ -30,10 +30,11 @@ async def stream_response(url: str, headers: dict, body: dict, provider: str):
     """
     start_time = time.time()
     first_token_time = None
+    token_count = 0
 
     for attempt in range(1, MAX_RETRIES + 1):
         try:
-            logger.info(f"Attempt {attempt} — starting stream from {provider}")
+            logger.info(f"Attempt {attempt}/{MAX_RETRIES} — starting stream from {provider}")
 
             async with httpx.AsyncClient(timeout=TIMEOUT) as client:
                 async with client.stream("POST", url, headers=headers, json=body) as response:
@@ -69,6 +70,7 @@ async def stream_response(url: str, headers: dict, body: dict, provider: str):
                                 continue
 
                         if token:
+                            token_count += 1
                             # record time to first token
                             if first_token_time is None:
                                 first_token_time = time.time()
@@ -79,14 +81,21 @@ async def stream_response(url: str, headers: dict, body: dict, provider: str):
 
             # if stream completed successfully, log total latency and stop retrying
             total_time = time.time() - start_time
-            logger.info(f"Stream complete. Total latency: {total_time:.3f}s")
+            logger.info(f"Stream complete. Total latency: {total_time:.3f}s, tokens: {token_count}")
             return
 
+        except httpx.TimeoutException:
+            logger.warning(f"Timeout on attempt {attempt}/{MAX_RETRIES}")
+            log_error(logger, "stream_timeout", provider, f"Stream request timed out after {TIMEOUT}s", attempt=attempt)
+
         except httpx.HTTPStatusError as e:
-            logger.error(f"HTTP error on attempt {attempt}: {e.response.status_code}")
+            logger.error(f"HTTP error on attempt {attempt}/{MAX_RETRIES}: {e.response.status_code}")
             logger.error(f"Response body: {e.response.text}")
+            log_error(logger, "stream_http_error", provider, f"HTTP {e.response.status_code}", attempt=attempt)
 
         except Exception as e:
-            logger.error(f"Unexpected error on attempt {attempt}: {e}")
+            logger.error(f"Unexpected error on attempt {attempt}/{MAX_RETRIES}: {type(e).__name__}: {e}")
+            log_error(logger, type(e).__name__, provider, f"Stream error: {str(e)}", attempt=attempt)
 
     logger.error("All retries failed for streaming")
+    log_error(logger, "stream_max_retries_exceeded", provider, "All stream retries failed")

@@ -1,7 +1,7 @@
 import json
 import re
-from utils.schemas import StructuredResponse
-from utils.logger import get_logger
+from .schemas import StructuredResponse
+from .logger import get_logger
 
 logger = get_logger("validators")
 

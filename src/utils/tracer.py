@@ -1,5 +1,5 @@
 import time
-from utils.logger import log_structured, get_logger
+from .logger import log_structured, get_logger
 
 logger = get_logger("tracer")
 

@@ -1,0 +1,27 @@
+2026-05-28 13:00:45 - requests - INFO - {"event": "api_request", "provider": "groq", "model": "llama-3.3-70b-versatile", "prompt_length": 32, "url": "https://api.groq.com/openai/v1/chat/completions"}
+2026-05-28 14:06:24 - requests - INFO - {"event": "api_request", "provider": "groq", "model": "llama-3.3-70b-versatile", "prompt_length": 57, "request_type": "structured"}
+2026-05-28 14:06:24 - requests - INFO - {"event": "api_request", "provider": "groq", "model": "llama-3.3-70b-versatile", "prompt_length": 373, "url": "https://api.groq.com/openai/v1/chat/completions", "attempt": 1}
+2026-05-28 14:32:18 - requests - INFO - {"event": "api_request", "provider": "groq", "model": "llama-3.3-70b-versatile", "prompt_length": 48, "url": "https://api.groq.com/openai/v1/chat/completions", "attempt": 1}
+2026-05-28 14:32:18 - requests - INFO - {"event": "api_request", "provider": "groq", "model": "llama-3.1-8b-instant", "prompt_length": 48, "url": "https://api.groq.com/openai/v1/chat/completions", "attempt": 1}
+2026-05-28 14:32:38 - requests - INFO - {"event": "api_request", "provider": "groq", "model": "llama-3.3-70b-versatile", "prompt_length": 39, "stream": true}
+2026-05-28 14:32:49 - requests - INFO - {"event": "api_request", "provider": "groq", "model": "llama-3.3-70b-versatile", "prompt_length": 57, "request_type": "structured"}
+2026-05-28 14:32:49 - requests - INFO - {"event": "api_request", "provider": "groq", "model": "llama-3.3-70b-versatile", "prompt_length": 373, "url": "https://api.groq.com/openai/v1/chat/completions", "attempt": 1}
+2026-05-28 14:33:18 - requests - INFO - {"event": "api_request", "provider": "groq", "model": "llama-3.3-70b-versatile", "prompt_length": 41, "tracing": true}
+2026-05-28 14:33:18 - requests - INFO - {"event": "api_request", "provider": "groq", "model": "llama-3.3-70b-versatile", "prompt_length": 41, "url": "https://api.groq.com/openai/v1/chat/completions", "attempt": 1}
+2026-05-28 14:33:19 - requests - INFO - {"event": "api_request", "provider": "groq", "model": "invalid-model-xyz", "prompt_length": 41, "simulation": true}
+2026-05-28 14:33:19 - requests - INFO - {"event": "api_request", "provider": "groq", "model": "invalid-model-xyz", "prompt_length": 41, "url": "https://api.groq.com/openai/v1/chat/completions", "attempt": 1}
+2026-05-28 14:33:20 - requests - INFO - {"event": "api_request", "provider": "groq", "model": "llama-3.3-70b-versatile", "prompt_length": 11, "url": "https://api.groq.com/openai/v1/chat/completions", "attempt": 1}
+2026-05-28 14:33:21 - requests - INFO - {"event": "api_request", "provider": "groq", "model": "llama-3.3-70b-versatile", "prompt_length": 11, "url": "https://api.groq.com/openai/v1/chat/completions", "attempt": 1}
+2026-05-28 14:33:23 - requests - INFO - {"event": "api_request", "provider": "groq", "model": "llama-3.3-70b-versatile", "prompt_length": 11, "url": "https://api.groq.com/openai/v1/chat/completions", "attempt": 1}
+2026-05-28 14:33:23 - requests - INFO - {"event": "api_request", "provider": "groq", "model": "llama-3.3-70b-versatile", "prompt_length": 11, "url": "https://api.groq.com/openai/v1/chat/completions", "attempt": 1}
+2026-05-28 14:33:24 - requests - INFO - {"event": "api_request", "provider": "groq", "model": "llama-3.3-70b-versatile", "prompt_length": 11, "url": "https://api.groq.com/openai/v1/chat/completions", "attempt": 1}
+2026-05-28 14:33:24 - requests - INFO - {"event": "api_request", "provider": "groq", "model": "llama-3.3-70b-versatile", "prompt_length": 11, "url": "https://api.groq.com/openai/v1/chat/completions", "attempt": 1}
+2026-05-28 14:36:55 - requests - INFO - {"event": "api_request", "provider": "groq", "model": "llama-3.3-70b-versatile", "prompt_length": 10, "conversation_turn": 1}
+2026-05-28 14:37:05 - requests - INFO - {"event": "api_request", "provider": "groq", "model": "llama-3.3-70b-versatile", "prompt_length": 15, "conversation_turn": 2}
+2026-05-28 15:06:24 - requests - INFO - {"event": "api_request", "provider": "ollama", "model": "gemma4:31b", "prompt_length": 25, "conversation_turn": 1}
+2026-05-28 15:07:22 - requests - INFO - {"event": "api_request", "provider": "groq", "model": "llama-3.3-70b-versatile", "prompt_length": 25, "conversation_turn": 1}
+2026-05-28 15:07:42 - requests - INFO - {"event": "api_request", "provider": "groq", "model": "llama-3.3-70b-versatile", "prompt_length": 10, "conversation_turn": 2}
+2026-05-28 15:08:05 - requests - INFO - {"event": "api_request", "provider": "groq", "model": "llama-3.3-70b-versatile", "prompt_length": 5, "conversation_turn": 3}
+2026-05-28 15:39:14 - requests - INFO - {"event": "api_request", "provider": "groq", "model": "llama-3.3-70b-versatile", "prompt_length": 39, "stream": true}
+2026-05-28 15:40:00 - requests - INFO - {"event": "api_request", "provider": "groq", "model": "llama-3.3-70b-versatile", "prompt_length": 39, "stream": true}
+2026-05-28 15:40:10 - requests - INFO - {"event": "api_request", "provider": "groq", "model": "llama-3.3-70b-versatile", "prompt_length": 39, "stream": true}

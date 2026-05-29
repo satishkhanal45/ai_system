@@ -1,6 +1,6 @@
 #provider URLs and headers
 
-from utils.config import GROQ_API_KEY, GEMINI_API_KEY, OLLAMA_BASE_URL
+from ..utils.config import GROQ_API_KEY, GEMINI_API_KEY, OLLAMA_BASE_URL
 
 PROVIDERS = {
     "groq": {
