@@ -22,11 +22,33 @@ def build_body(provider: str, model: str, prompt: str) -> dict:
             "contents": [{"parts": [{"text": prompt}]}]
         }
 
+import json
+
+def parse_ollama_response(text: str) -> str:
+    """
+    Ollama streams newline-delimited JSON objects.
+    The final object has done=true and carries the full message.
+    We find the last non-empty line and extract message.content.
+    """
+    last = None
+    for line in text.strip().splitlines():
+        line = line.strip()
+        if line:
+            last = line
+    if last is None:
+        return "error: empty response from ollama"
+    obj = json.loads(last)
+    # /api/chat format: {"message": {"role": "assistant", "content": "..."}}
+    return obj.get("message", {}).get("content", "error: unexpected ollama format")
+
+
 def parse_response(provider: str, data: dict) -> str:
-    if provider == "groq" or provider == "ollama":
+    if provider == "groq":
         return data["choices"][0]["message"]["content"]
     elif provider == "gemini":
         return data["candidates"][0]["content"]["parts"][0]["text"]
+    # ollama is handled separately via parse_ollama_response — should not reach here
+    return "error: unknown provider"
 
 async def async_post(url: str, headers: dict, body: dict, provider: str, model: str) -> str:
     prompt = body.get("messages", [{}])[0].get("content", "") if "messages" in body else body.get("contents", [{}])[0].get("parts", [{}])[0].get("text", "")
