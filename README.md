@@ -7,32 +7,39 @@ End-to-end AI system built with Python covering async API clients, streaming, st
 ## Project Structure
 
 ```
-ai_system/
-├── api/
-│   ├── __init__.py              # API module boundary
-│   ├── client.py                # Async httpx client with retries and timeouts
-│   ├── providers.py             # Provider URLs and headers (Groq, Gemini, Ollama)
-│   └── streaming.py             # Async token streaming client
-├── services/
-│   ├── __init__.py              # Services module boundary
-│   ├── llm_service.py           # Unified LLM call service
-│   ├── stream_service.py        # Streaming pipeline service
-│   ├── structured_service.py    # Structured output + validation service
-│   ├── debug_service.py         # Request tracing and failure simulation
-│   └── chat_service.py          # Chat with memory service
-├── utils/
-│   ├── __init__.py              # Utils module boundary
-│   ├── config.py                # Environment variable loader
-│   ├── logger.py                # Structured logging system
-│   ├── schemas.py               # Pydantic request/response schemas
-│   ├── tracer.py                # Request tracing (latency, tokens)
-│   ├── validators.py            # LLM output validation and JSON recovery
-│   └── cli.py                   # CLI colors and formatting helpers
-├── config_switcher.py           # Runtime provider switching
-├── main.py                      # Interactive terminal task runner (entry point)
-├── .env                         # API keys and config (not committed)
-├── .gitignore                   # Ignores .env and .venv
-└── pyproject.toml               # Project dependencies (uv)
+AI_SYSTEM/
+├── src/
+│   ├── api/
+│   │   ├── __init__.py              # API module boundary
+│   │   ├── client.py                # Async httpx client with retries and timeouts
+│   │   ├── providers.py             # Provider URLs and headers (Groq, Gemini, Ollama)
+│   │   └── streaming.py             # Async token streaming client
+│   ├── services/
+│   │   ├── __init__.py              # Services module boundary
+│   │   ├── chat_service.py          # Chat with memory service
+│   │   ├── debug_service.py         # Request tracing and failure simulation
+│   │   ├── llm_service.py           # Unified LLM call service
+│   │   ├── stream_service.py        # Streaming pipeline service
+│   │   └── structured_service.py    # Structured output + validation service
+│   └── utils/
+│       ├── __init__.py              # Utils module boundary
+│       ├── cli.py                   # CLI colors and formatting helpers
+│       ├── config.py                # Environment variable loader
+│       ├── logger.py                # Structured logging system
+│       ├── schemas.py               # Pydantic request/response schemas
+│       ├── tracer.py                # Request tracing (latency, tokens)
+│       └── validators.py            # LLM output validation and JSON recovery
+├── logs/
+│   └── app.log                      # All logs saved here permanently
+├── config_switcher.py               # Runtime provider switching
+├── main.py                          # Interactive terminal task runner (entry point)
+├── test_logging.py                  # Logging test script
+├── .env                             # API keys and config (not committed)
+├── .gitignore                       # Ignores .env, .venv, logs/
+├── .python-version                  # Python version pin
+├── pyproject.toml                   # Project dependencies (uv)
+├── uv.lock                          # Dependency lockfile
+└── README.md                        # Project documentation
 ```
 
 ---
@@ -46,8 +53,8 @@ pip install uv
 
 **2. Create and enter the project**
 ```bash
-uv init ai_system
-cd ai_system
+uv init AI_SYSTEM
+cd AI_SYSTEM
 ```
 
 **3. Install dependencies**
@@ -117,6 +124,17 @@ Conversational chat interface that remembers the full conversation history acros
 
 ---
 
+## Logging
+
+All logs are saved permanently to `logs/app.log`. Every request, response, and error is recorded with a timestamp.
+
+```bash
+cat logs/app.log        # view all logs
+tail -f logs/app.log    # watch logs live as they are written
+```
+
+---
+
 ## CLI Colors
 
 | Color | Meaning |
@@ -147,7 +165,7 @@ Conversational chat interface that remembers the full conversation history acros
 | Groq | `llama-3.3-70b-versatile` | Primary model, fast and capable |
 | Groq | `llama-3.1-8b-instant` | Smaller, used for provider switch demo |
 | Gemini | `gemini-2.0-flash` | Free tier has daily quota limit |
-| Ollama | `llama3.2` | Local only, requires `ollama serve` running |
+| Ollama | `gemma3:12b` | Local only, requires `ollama serve` running |
 
 ---
 
@@ -165,10 +183,11 @@ When running task 6 (Chat with Memory):
 
 ## Notes
 
-- `.env` is listed in `.gitignore` — never commit API keys to git
+- `.env` is listed in `.gitignore` 
+- `logs/` is listed in `.gitignore` — log files are local only
 - Groq is the recommended provider — free, fast, and no daily quota issues
 - Gemini free tier exhausts quickly — switch to Groq if you hit a 429 error
 - Ollama requires the app installed locally and `ollama serve` running in a separate terminal
-- All provider configs live in `api/providers.py` — adding a new provider is one block
+- All provider configs live in `src/api/providers.py` — adding a new provider is one block
 - Runtime provider switching is handled by `config_switcher.py` without restarting the app
 - Chat memory works by sending the full conversation history to the LLM on every request

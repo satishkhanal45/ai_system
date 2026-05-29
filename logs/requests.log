@@ -25,3 +25,5 @@
 2026-05-28 15:39:14 - requests - INFO - {"event": "api_request", "provider": "groq", "model": "llama-3.3-70b-versatile", "prompt_length": 39, "stream": true}
 2026-05-28 15:40:00 - requests - INFO - {"event": "api_request", "provider": "groq", "model": "llama-3.3-70b-versatile", "prompt_length": 39, "stream": true}
 2026-05-28 15:40:10 - requests - INFO - {"event": "api_request", "provider": "groq", "model": "llama-3.3-70b-versatile", "prompt_length": 39, "stream": true}
+2026-05-29 09:29:21 - requests - INFO - {"event": "api_request", "provider": "groq", "model": "llama-3.3-70b-versatile", "prompt_length": 12, "conversation_turn": 1}
+2026-05-29 09:29:34 - requests - INFO - {"event": "api_request", "provider": "groq", "model": "llama-3.3-70b-versatile", "prompt_length": 28, "conversation_turn": 2}
