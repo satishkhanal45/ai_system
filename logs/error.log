@@ -742,3 +742,5 @@
 2026-05-29 11:49:04 - chat_service - ERROR - [logger.py:107] - ERROR: {"event": "error", "error_type": "JSONDecodeError", "provider": "ollama", "message": "Extra data: line 2 column 1 (char 126)", "attempt": 3}
 2026-05-29 12:16:45 - test_logger - ERROR - [logger.py:107] - ERROR: {"event": "error", "error_type": "http_error", "provider": "groq", "message": "HTTP 429 - Rate Limited", "attempt": 3, "status_code": 429}
 2026-05-29 12:16:45 - test_logger - ERROR - [logger.py:107] - ERROR: {"event": "error", "error_type": "timeout", "provider": "gemini", "message": "Request timed out after 30 seconds", "attempt": 2}
+2026-05-29 14:56:28 - test_logger - ERROR - [logger.py:107] - ERROR: {"event": "error", "error_type": "http_error", "provider": "groq", "message": "HTTP 429 - Rate Limited", "attempt": 3, "status_code": 429}
+2026-05-29 14:56:28 - test_logger - ERROR - [logger.py:107] - ERROR: {"event": "error", "error_type": "timeout", "provider": "gemini", "message": "Request timed out after 30 seconds", "attempt": 2}

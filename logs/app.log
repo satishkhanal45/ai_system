@@ -980,3 +980,35 @@
 ============================================================
 2026-05-29 12:16:45 - test_logger - INFO - [test_logging.py:77] - Logging test complete!
 2026-05-29 12:16:45 - test_logger - INFO - [test_logging.py:78] - ============================================================
+2026-05-29 14:56:28 - test_logger - INFO - [test_logging.py:15] - ============================================================
+2026-05-29 14:56:28 - test_logger - INFO - [test_logging.py:16] - Starting logging system test
+2026-05-29 14:56:28 - test_logger - INFO - [test_logging.py:17] - ============================================================
+2026-05-29 14:56:28 - test_logger - INFO - [test_logging.py:20] - This is an info message
+2026-05-29 14:56:28 - test_logger - WARNING - [test_logging.py:21] - This is a warning message
+2026-05-29 14:56:28 - test_logger - INFO - [test_logging.py:24] - 
+--- Test 1: Logging API Request ---
+2026-05-29 14:56:28 - test_logger - INFO - [logger.py:83] - REQUEST: {"event": "api_request", "provider": "groq", "model": "llama-3.3-70b-versatile", "prompt_length": 32, "url": "https://api.groq.com/openai/v1/chat/completions"}
+2026-05-29 14:56:28 - test_logger - INFO - [test_logging.py:34] - 
+--- Test 2: Logging API Response ---
+2026-05-29 14:56:28 - test_logger - INFO - [logger.py:96] - RESPONSE: {"event": "api_response", "provider": "groq", "model": "llama-3.3-70b-versatile", "response_length": 66, "status": "success", "elapsed_time": "0.85s", "attempt": 1, "status_code": 200}
+2026-05-29 14:56:28 - test_logger - INFO - [test_logging.py:47] - 
+--- Test 3: Logging Error ---
+2026-05-29 14:56:28 - test_logger - ERROR - [logger.py:107] - ERROR: {"event": "error", "error_type": "http_error", "provider": "groq", "message": "HTTP 429 - Rate Limited", "attempt": 3, "status_code": 429}
+2026-05-29 14:56:28 - test_logger - INFO - [test_logging.py:58] - 
+--- Test 4: Structured Event Logging ---
+2026-05-29 14:56:28 - test_logger - INFO - [logger.py:112] - {"event": "chat_initiated", "user_id": "user_123", "provider": "groq", "model": "llama-3.3-70b-versatile", "conversation_turn": 1}
+2026-05-29 14:56:28 - test_logger - INFO - [test_logging.py:67] - 
+--- Test 5: Another Error Example ---
+2026-05-29 14:56:28 - test_logger - ERROR - [logger.py:107] - ERROR: {"event": "error", "error_type": "timeout", "provider": "gemini", "message": "Request timed out after 30 seconds", "attempt": 2}
+2026-05-29 14:56:28 - test_logger - INFO - [test_logging.py:76] - 
+============================================================
+2026-05-29 14:56:28 - test_logger - INFO - [test_logging.py:77] - Logging test complete!
+2026-05-29 14:56:28 - test_logger - INFO - [test_logging.py:78] - ============================================================
+2026-05-29 15:36:43 - client - INFO - [logger.py:83] - REQUEST: {"event": "api_request", "provider": "groq", "model": "llama-3.3-70b-versatile", "prompt_length": 48, "url": "https://api.groq.com/openai/v1/chat/completions", "attempt": 1}
+2026-05-29 15:36:43 - client - INFO - [client.py:62] - Attempt 1/3 — sending request to groq (model: llama-3.3-70b-versatile)
+2026-05-29 15:36:44 - client - INFO - [logger.py:96] - RESPONSE: {"event": "api_response", "provider": "groq", "model": "llama-3.3-70b-versatile", "response_length": 271, "status": "success", "attempt": 1, "elapsed_time": "0.57s", "status_code": 200}
+2026-05-29 15:36:44 - llm_service - INFO - [logger.py:96] - RESPONSE: {"event": "api_response", "provider": "groq", "model": "llama-3.3-70b-versatile", "response_length": 271, "status": "success"}
+2026-05-29 15:36:44 - client - INFO - [logger.py:83] - REQUEST: {"event": "api_request", "provider": "groq", "model": "llama-3.1-8b-instant", "prompt_length": 48, "url": "https://api.groq.com/openai/v1/chat/completions", "attempt": 1}
+2026-05-29 15:36:44 - client - INFO - [client.py:62] - Attempt 1/3 — sending request to groq (model: llama-3.1-8b-instant)
+2026-05-29 15:36:44 - client - INFO - [logger.py:96] - RESPONSE: {"event": "api_response", "provider": "groq", "model": "llama-3.1-8b-instant", "response_length": 246, "status": "success", "attempt": 1, "elapsed_time": "0.53s", "status_code": 200}
+2026-05-29 15:36:44 - llm_service - INFO - [logger.py:96] - RESPONSE: {"event": "api_response", "provider": "groq", "model": "llama-3.1-8b-instant", "response_length": 246, "status": "success"}
